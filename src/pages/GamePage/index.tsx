@@ -53,6 +53,7 @@ const GamePage: React.FC<Props> = ({}) => {
     Navigation.dispatch(
       StackActions.replace(PAGE_NAME.WINNING_PAGE, {
         word: wordToGuess,
+        categoryName: params?.categoryName,
       }),
     );
   };

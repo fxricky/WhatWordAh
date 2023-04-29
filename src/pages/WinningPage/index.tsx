@@ -14,7 +14,7 @@ type Props = {};
 
 type PropsData = RouteProp<
   {
-    WINNING_PAGE: {word: string};
+    WINNING_PAGE: {word: string; categoryName: string};
   },
   'WINNING_PAGE'
 >;
@@ -24,7 +24,11 @@ const WinningPage: React.FC<Props> = ({}) => {
   const Navigation = useNavigation();
 
   const navigateToNewGame = () => {
-    Navigation.dispatch(StackActions.replace(PAGE_NAME.GAME_PAGE));
+    Navigation.dispatch(
+      StackActions.replace(PAGE_NAME.GAME_PAGE, {
+        categoryName: params?.categoryName,
+      }),
+    );
   };
 
   return (
