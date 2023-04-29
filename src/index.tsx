@@ -1,15 +1,28 @@
 import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {Text, View} from 'react-native';
+import SplashScreen from './pages/SplashScreen';
+import HomePage from './pages/HomePage';
+import {PAGE_NAME} from './pages/pageName';
+import GamePage from './pages/GamePage';
+import WinningPage from './pages/WinningPage';
 
 type Props = {};
+
+const Stack = createNativeStackNavigator();
 
 const AppRoot: React.FC<Props> = ({}) => {
   return (
     <NavigationContainer>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>This is App Root</Text>
-      </View>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name={PAGE_NAME.SPLASH_SCREEN} component={SplashScreen} />
+        <Stack.Screen name={PAGE_NAME.HOME_PAGE} component={HomePage} />
+        <Stack.Screen name={PAGE_NAME.GAME_PAGE} component={GamePage} />
+        <Stack.Screen name={PAGE_NAME.WINNING_PAGE} component={WinningPage} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
