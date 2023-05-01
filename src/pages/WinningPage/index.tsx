@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import Colors from '../../theme/Colors';
 import {
   RouteProp,
@@ -12,6 +12,7 @@ import {PAGE_NAME} from '../pageName';
 import {getDifficulties} from '../../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE_KEYS} from '../../constants';
+import Share from 'react-native-share';
 
 type Props = {};
 
@@ -51,6 +52,21 @@ const WinningPage: React.FC<Props> = ({}) => {
     );
   };
 
+  const handleShareScore = async () => {
+    try {
+      await Share.shareSingle({
+        backgroundImage: 'http://urlto.png',
+        stickerImage: 'data:image/png;base64,<imageInBase64>',
+        backgroundBottomColor: '#fefefe',
+        backgroundTopColor: '#906df4',
+        social: Share.Social.INSTAGRAM_STORIES,
+        appId: 'com.whatwordsah',
+      });
+    } catch (error) {
+      Alert.alert('Error', 'Sharing failed.');
+    }
+  };
+
   return (
     <PageContainer style={[styles.container]}>
       <View style={styles.contentContainer}>
@@ -59,7 +75,7 @@ const WinningPage: React.FC<Props> = ({}) => {
       </View>
       <Text style={styles.scoreTxt}>{score} points</Text>
       <View style={{flex: 1, justifyContent: 'center', width: '100%'}}>
-        <Pressable style={styles.shareBtn}>
+        <Pressable style={styles.shareBtn} onPress={handleShareScore}>
           <Text style={styles.shareTxt}>Share</Text>
         </Pressable>
         <Pressable style={styles.nextBtn} onPress={navigateToNewGame}>
