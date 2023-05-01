@@ -9,6 +9,9 @@ import {
 } from '@react-navigation/native';
 import PageContainer from '../../components/PageContainer';
 import {PAGE_NAME} from '../pageName';
+import {getDifficulties} from '../../utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {STORAGE_KEYS} from '../../constants';
 
 type Props = {};
 
@@ -22,6 +25,23 @@ type PropsData = RouteProp<
 const WinningPage: React.FC<Props> = ({}) => {
   const {params} = useRoute<PropsData>();
   const Navigation = useNavigation();
+  const [score, setScore] = React.useState('');
+
+  React.useEffect(() => {
+    if (params.word) {
+      const config = getDifficulties(params.word.length);
+      setScore(config.score + '');
+
+      saveScoreToStorage(config.score);
+    }
+  }, [params.word]);
+
+  const saveScoreToStorage = async (score: number) => {
+    const latestScore =
+      +((await AsyncStorage.getItem(STORAGE_KEYS.USER_SCORE)) || '') + score;
+
+    await AsyncStorage.setItem(STORAGE_KEYS.USER_SCORE, latestScore + '');
+  };
 
   const navigateToNewGame = () => {
     Navigation.dispatch(
@@ -37,6 +57,7 @@ const WinningPage: React.FC<Props> = ({}) => {
         <Text style={styles.guessWordTxt}>{params?.word}</Text>
         <Text style={styles.contentTxt}>You got this right!</Text>
       </View>
+      <Text style={styles.scoreTxt}>{score} points</Text>
       <View style={{flex: 1, justifyContent: 'center', width: '100%'}}>
         <Pressable style={styles.shareBtn}>
           <Text style={styles.shareTxt}>Share</Text>
@@ -59,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 44,
     marginBottom: 44,
     fontWeight: '600',
+    textAlign: 'center',
 
     color: Colors.primary,
   },
@@ -93,7 +115,10 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  shareTxt: {color: Colors.primary, fontSize: 16},
+  shareTxt: {
+    color: Colors.primary,
+    fontSize: 16,
+  },
   nextBtn: {
     backgroundColor: Colors.spaceGrey,
     marginTop: 20,
@@ -115,7 +140,14 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  nextTxt: {color: Colors.shadyWhite, fontSize: 24},
+  nextTxt: {
+    color: Colors.shadyWhite,
+    fontSize: 24,
+  },
+  scoreTxt: {
+    fontSize: 44,
+    fontWeight: '600',
+  },
 });
 
 export default WinningPage;

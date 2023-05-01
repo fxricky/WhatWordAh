@@ -34,3 +34,7 @@ export const DIFFICULTIES: Record<string, DifficultiesConfig> = {
     score: 4,
   },
 };
+
+export const STORAGE_KEYS = {
+  USER_SCORE: 'USER_SCORE',
+};
