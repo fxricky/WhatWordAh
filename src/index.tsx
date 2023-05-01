@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import {PAGE_NAME} from './pages/pageName';
 import GamePage from './pages/GamePage';
 import WinningPage from './pages/WinningPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 type Props = {};
 
@@ -22,6 +23,10 @@ const AppRoot: React.FC<Props> = ({}) => {
         <Stack.Screen name={PAGE_NAME.HOME_PAGE} component={HomePage} />
         <Stack.Screen name={PAGE_NAME.GAME_PAGE} component={GamePage} />
         <Stack.Screen name={PAGE_NAME.WINNING_PAGE} component={WinningPage} />
+        <Stack.Screen
+          name={PAGE_NAME.LEADERBOARD_PAGE}
+          component={LeaderboardPage}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

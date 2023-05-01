@@ -3,3 +3,9 @@ export type DifficultiesConfig = {
   max?: number;
   score: number;
 };
+
+export type LeaderboardInfo = {
+  id: number;
+  name: string;
+  score: number;
+};

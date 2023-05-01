@@ -1,10 +1,11 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import PageContainer from '../../components/PageContainer';
 import {CATEGORIES} from '../../constants';
 import {useNavigation} from '@react-navigation/native';
 import {PAGE_NAME} from '../pageName';
 import Colors from '../../theme/Colors';
+import {icLeaderboard} from '../../assets';
 
 type Props = {};
 
@@ -17,20 +18,31 @@ const HomePage: React.FC<Props> = ({}) => {
     });
   };
 
+  const navigateToLeaderboardPage = () => {
+    Navigation.navigate(PAGE_NAME.LEADERBOARD_PAGE);
+  };
+
   return (
-    <PageContainer style={styles.container}>
-      <Text style={styles.appNameTxt}>WHAT WORD AH</Text>
-      <View style={styles.catContainer}>
-        <Text style={styles.catHintTxt}>Select a category</Text>
-        {Object.keys(CATEGORIES).map(c => {
-          return (
-            <Pressable
-              onPress={navigateToGamePage(c)}
-              style={styles.categoryBtn}>
-              <Text style={styles.categoryTxt}>{c}</Text>
-            </Pressable>
-          );
-        })}
+    <PageContainer>
+      <Pressable
+        style={styles.leaderboardBtn}
+        onPress={navigateToLeaderboardPage}>
+        <Image source={icLeaderboard} style={styles.leaderboardBtnImg} />
+      </Pressable>
+      <View style={styles.container}>
+        <Text style={styles.appNameTxt}>WHAT WORD AH</Text>
+        <View style={styles.catContainer}>
+          <Text style={styles.catHintTxt}>Select a category</Text>
+          {Object.keys(CATEGORIES).map(c => {
+            return (
+              <Pressable
+                onPress={navigateToGamePage(c)}
+                style={styles.categoryBtn}>
+                <Text style={styles.categoryTxt}>{c}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
     </PageContainer>
   );
@@ -80,6 +92,18 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     color: Colors.shadyWhite,
     fontWeight: '600',
+  },
+  leaderboardBtn: {
+    alignSelf: 'flex-end',
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  leaderboardBtnImg: {
+    height: 28,
+    width: 28,
+    tintColor: Colors.paleGrey,
   },
 });
 
