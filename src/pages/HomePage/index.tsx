@@ -36,8 +36,10 @@ const HomePage: React.FC<Props> = ({}) => {
           {Object.keys(CATEGORIES).map(c => {
             return (
               <Pressable
+                key={c}
                 onPress={navigateToGamePage(c)}
-                style={styles.categoryBtn}>
+                style={styles.categoryBtn}
+                accessibilityRole={'button'}>
                 <Text style={styles.categoryTxt}>{c}</Text>
               </Pressable>
             );

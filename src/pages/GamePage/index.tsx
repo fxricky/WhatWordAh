@@ -4,7 +4,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import PageContainer from '../../components/PageContainer';
 import {CATEGORIES} from '../../constants';
@@ -25,9 +25,9 @@ type PropsData = RouteProp<
 const GamePage: React.FC<Props> = ({}) => {
   const {params} = useRoute<PropsData>();
   const Navigation = useNavigation();
-  const [wordToGuess, setWordToGuess] = useState<string>('');
-  const [shuffledWord, setShuffledWord] = useState<string[]>([]);
-  const [correctWord, setCorrectWord] = useState<string[]>([]);
+  const [wordToGuess, setWordToGuess] = React.useState<string>('');
+  const [shuffledWord, setShuffledWord] = React.useState<string[]>([]);
+  const [correctWord, setCorrectWord] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     if (params?.categoryName) {
@@ -92,7 +92,9 @@ const GamePage: React.FC<Props> = ({}) => {
               .split('')
               .map((_, index) => {
                 return (
-                  <View style={[styles.btnRoot, styles.stageBtn]}>
+                  <View
+                    key={`${index}-${_}`}
+                    style={[styles.btnRoot, styles.stageBtn]}>
                     <Text style={[styles.btnTxt, styles.stageBtnTxt]}>
                       {correctWord[index]}
                     </Text>
@@ -107,6 +109,8 @@ const GamePage: React.FC<Props> = ({}) => {
 
           return (
             <Pressable
+              key={`${i}-${w}`}
+              testID={'guess-button'}
               style={[styles.btnRoot, styles.guessBtn, btnStyle]}
               onPress={handleWordPressed(w, i)}>
               <Text style={[styles.btnTxt, styles.guessBtnTxt]}>{w}</Text>
