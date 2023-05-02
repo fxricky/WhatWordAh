@@ -22,4 +22,14 @@
     j --> k{is the word finished?}
     k --no--> g
     k --yes--> l[Navigate to WinningPage]
+    l --> e
 ```
+
+#### Difficulties
+
+| difficulties | min word | max word | score |
+| ------------ | -------- | -------- | ----- |
+| easy         | 1        | 5        | 1     |
+| medium       | 6        | 10       | 2     |
+| hard         | 11       | 15       | 3     |
+| super_hard   | 16       | >=16     | 4     |
